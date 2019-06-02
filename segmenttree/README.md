@@ -1,5 +1,5 @@
 # segment trees
 
 ### xenia.cpp
-http://codeforces.com/contest/339/problem/D </br>
+[339D - Xenia and Bit Operations](http://codeforces.com/contest/339/problem/D) </br>
 simple segment tree
