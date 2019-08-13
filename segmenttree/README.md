@@ -15,3 +15,4 @@ Do the prefix and suffix sum. Do an array of number of occurences of each elemen
 ### enemyisweak.cpp
 [61E - Enemy is weak](https://codeforces.com/contest/61/problem/E) </br>
 
+Map numbers to [0..10^6]. Iterate from right to left and for each number x count numbers smaller than x (this gives us pairs), store it in a segment tree, sum pairs with greater number smaller than x (this gives us triplets)
