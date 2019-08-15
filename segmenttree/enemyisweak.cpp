@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <cstring>
+#include <unordered_map>
 
 #define ulong unsigned long long
 
@@ -33,28 +34,31 @@ int main() {
 
     cin >> n;
 
-    map<int, int> m;
+    unordered_map<int, int> m;
     vector<int> v(n);
     for (int i = 0; i < n; ++i) {
         cin >> v[i];
         m[v[i]] = 0;
     }
 
+    vector<int> v2 = v;
+    sort(v2.begin(), v2.end());
     int i = 0;
-    map<int, int>::iterator it;
-    for (it = m.begin(); it != m.end(); ++it) {
-        m[it->first] = i++;
+
+    for (int i = 0; i < n; ++i) {
+        m[v2[i]] = i;
     }
 
     
     ulong result = 0;
     for (int i = n - 1; i >= 0; --i) {
-        ulong small_right = query(0, m[v[i]]);
+        int x = m[v[i]];
+        ulong small_right = query(0, x);
         ulong great_right = n - 1 - i - small_right;
-        ulong greater = n - 1 - m[v[i]];
+        ulong greater = n - 1 - x;
         ulong great_left = greater - great_right;
 
-        modify(m[v[i]], 1);
+        modify(x, 1);
 
 
         result += great_left * small_right;
