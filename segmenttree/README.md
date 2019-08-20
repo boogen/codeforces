@@ -16,3 +16,8 @@ Do the prefix and suffix sum. Do an array of number of occurences of each elemen
 [61E - Enemy is weak](https://codeforces.com/contest/61/problem/E) </br>
 
 Map numbers to [0..n-1]. Iterate from right to left and for each number x count numbers smaller than x (on the right in the array), notice that now we have integers from 0 to n, so we can count numbers greater than x that are on left in the array. Number of triplets with x as middle element is greater_left * smaller_right.
+
+### brackets.cpp
+[380C - Sereja and Brackets](https://codeforces.com/contest/380/problem/C) </br>
+
+Build 3 trees - with left unmatched brackets, right unmatched brackets and with fully closed brackets
