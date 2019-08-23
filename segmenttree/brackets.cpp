@@ -10,38 +10,66 @@
  
 using namespace std;
  
-int lf[2 * 1048576 + 1];
-int rt[2 * 1048576 + 1];
-int all[2 * 1048576 + 1];
+int o[2 * 1048576 + 1];
+int c[2 * 1048576 + 1];
+int t[2 * 1048576 + 1];
+
  
 int n;
+string line;
+
+void build(int id, int l, int r ) {
+    if (r - l < 2) {
+        if (line.at(l) == '(')
+            o[id] = 1;
+        if (line.at(l) == ')')
+            c[id] = 1;
+        return;
+    }
+
+    int mid = (l + r) / 2;
+
+    build(2 * id, l, mid);
+    build(2 * id + 1, mid, r);
+    int tmp = min(o[2 * id], c[2 * id + 1]);
+    o[id] = o[2 * id] + o[2 * id + 1] - tmp;
+    c[id] = c[2 * id] + c[2 * id + 1] - tmp;
+    t[id] = t[2 * id] + t[2 * id + 1] + 2 * tmp;
+
+    
+    
+}
+
+pair<pair<int, int>, int> query(int x, int y, int id, int l, int r) {
+    if (x >= r || y <= l)
+        return make_pair(make_pair(0, 0), 0);
+
+    if (x <= l && r <= y) 
+        return make_pair(make_pair(o[id], c[id]), t[id]);
+
+    int mid = (l + r) / 2;
+    pair<pair<int, int>, int> lt = query(x, y, 2 * id, l, mid);
+    pair<pair<int, int>, int> rt = query(x, y, 2 * id + 1, mid, r);
+    
+
+    int tmp = min(lt.first.first, rt.first.second);
+    int op = lt.first.first + rt.first.first - tmp;
+    int cl = lt.first.second + rt.first.second - tmp;
+    int tl = lt.second + rt.second + 2 * tmp;
+
+    return make_pair(make_pair(op, cl), tl);
+}
  
  
 int main() {
-    memset(lf, 0, sizeof(lf));
-    memset(rt, 0, sizeof(rt));
-    memset(all, 0, sizeof(all));
+    memset(o, 0, sizeof(o));
+    memset(c, 0, sizeof(c));
+    memset(t, 0, sizeof(t));
  
-    string line;
     getline(cin, line);
-    n = line.length() - 1;
-    n = (1 << (int)ceil(log2(n)));
+    n = line.length() ;
  
-    for (int i = 0; i < line.size(); ++i) {
-    	if (line.at(i) == '(') {
-    		lf[i + n] = 1;
-    	}
-    	else if (line.at(i) == ')') {
-    		rt[i + n] = 1;
-    	}
-    }
- 
-    for (int i = n - 1; i >= 0; --i) {
-    	int closed =min(lf[2 * i], rt[2 * i + 1]);
-    	all[i] = 2 * closed + all[2 * i] + all[2 * i + 1];
-    	lf[i] = lf[2 * i] - closed + lf[2 * i + 1];
-    	rt[i] = rt[2 * i + 1] - closed + rt[2 * i];
-    }
+    build(1, 0, n);
  
     int m;
     cin >> m;
@@ -52,29 +80,6 @@ int main() {
     	cin >> l >> r;
     	l -= 1;
  
-    	vector<int> seg;
-    	vector<int> s2;
-		for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
-			if (l&1) seg.push_back(l++);
-			if (r&1) s2.push_back(--r);
-		}
- 
- 
-		reverse(s2.begin(), s2.end());
- 
-		seg.insert( seg.end(), s2.begin(), s2.end() );
- 
-		int res = 0;
-		if (seg.size() > 0) {
-			res = all[seg[0]];
-			int a = lf[seg[0]];
-			for (int j = 1; j < seg.size(); ++j) {
-				int ind = seg[j];
-				res += 2 * min(a, rt[ind]) + all[ind];
-				a = max(0, a - rt[ind]);
-				a += lf[ind];
-			}
-		}
-		cout << res << endl;
+		cout << query(l, r, 1, 0, n).second << endl;
     }
 }
