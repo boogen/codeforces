@@ -21,3 +21,8 @@ Map numbers to [0..n-1]. Iterate from right to left and for each number x count 
 [380C - Sereja and Brackets](https://codeforces.com/contest/380/problem/C) </br>
 
 Build 3 trees - with left unmatched brackets, right unmatched brackets and with fully closed brackets
+
+### antcolony.cpp
+[474F - Ant Colony](https://codeforces.com/contest/474/problem/F) </br>
+
+Notice that for ant to survive, its strength has to divide all other strengths in the segment (including self), so gcd of the segment has to be equal to ant strength. We build 2 trees - gcd of the segment and nr of elements equal to gcd in the segment. Result is length of segment minus nr of elements equal to gcd. 
