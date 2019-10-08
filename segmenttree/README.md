@@ -26,3 +26,8 @@ Build 3 trees - with left unmatched brackets, right unmatched brackets and with 
 [474F - Ant Colony](https://codeforces.com/contest/474/problem/F) </br>
 
 Notice that for ant to survive, its strength has to divide all other strengths in the segment (including self), so gcd of the segment has to be equal to ant strength. We build 2 trees - gcd of the segment and nr of elements equal to gcd in the segment. Result is length of segment minus nr of elements equal to gcd. 
+
+### copyingdata.cpp
+[292E - Copying Data](https://codeforces.com/contest/292/problem/E) </br>
+
+Build a tree in which in every node you remember if it is a segment from A or B. If it should be "copied" from A, remember at which index in A to start (we have the length of the segment anyway, so don't have to store that). Also remember in which sequence node was updated. On query go through all height of the tree and return value with the highest sequence number. 
