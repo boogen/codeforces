@@ -31,3 +31,8 @@ Notice that for ant to survive, its strength has to divide all other strengths i
 [292E - Copying Data](https://codeforces.com/contest/292/problem/E) </br>
 
 Build a tree in which in every node you remember if it is a segment from A or B. If it should be "copied" from A, remember at which index in A to start (we have the length of the segment anyway, so don't have to store that). Also remember in which sequence node was updated. On query go through all height of the tree and return value with the highest sequence number. 
+
+### mishapermutations.cpp
+[501D - Misha and Permutations Summation](https://codeforces.com/contest/501/problem/D) </br>
+
+Notice that when having n! permutations, those (n - 1)! permutation are repeated n times. And so are (n - 2)! permutations repeated (n - 1). They might be repeated with a different set of numbers, but are basically the same. Remap those permutations. For example remap (0 2 4 1 3) -> (0 1 2 0 0). Respectively: 0 is the smallest element in set (0 2 4 1 3), so give it index 0. 2 is second smallest element in set (2 4 1 3), so give it index 1. 4 is the greatest element in set (3 1 3), so give it index 2. And so on. To find this we can use a segment tree. Find how many elements smaller then a[i] are in the tree and then add a[i] to the tree. Add those two arrays (with the remainder). Now we have to remap back. For example (0 1 2 1 0) -> (0 2 4 3 1) (the smallest is 0, remove 0 from set, second smallest from the remainding set (1 2 3 4) is 2 and so on). We can have a segment tree with 1s in the leaves, and remove element at each selected step, we can find in logn the kth smallest element. 
